@@ -1,0 +1,20 @@
+services:
+  maria-db:
+    image: mariadb:latest
+    container_name: accelerator-maria-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: examplerootpass
+      MYSQL_DATABASE: exampledatabase
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./scripts/setup-database-schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+  service:
+    image: accelerator-service:latest
+    container_name: accelerator-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - maria-db
