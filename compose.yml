@@ -10,6 +10,11 @@ services:
       - "3306:3306"
     volumes:
       - ./scripts/setup-database-schema.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-pexamplerootpass"]
+      interval: 5s
+      retries: 5
+      timeout: 3s
 
   service:
     image: accelerator-service:latest
@@ -17,4 +22,5 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - maria-db
+      maria-db:
+        condition: service_healthy

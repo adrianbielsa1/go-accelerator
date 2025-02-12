@@ -14,7 +14,7 @@ func main() {
 		Username: "root",
 		Password: "examplerootpass",
 		Database: "exampledatabase",
-		Host:     "localhost",
+		Host:     "maria-db",
 		Port:     3306,
 	})
 
